@@ -38,8 +38,8 @@
 
 ## 📌 DB Modeling
 
-🔗 dbdiagram
-
+**[🔗 dbdiagram](https://dbdiagram.io/d/6342861cf0018a1c5fc43173)**
+![DB Modeling](https://imgur.com/e96LpnO)
 
 <br>
 
@@ -54,6 +54,7 @@
 - 사용언어 : Javascript
 - 런타임 환경 : Node.js
 - 프레임워크 : Express
+- ORM : TypeORM
 - 데이터베이스 : MySQL
 
 <br/>
