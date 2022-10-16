@@ -39,7 +39,7 @@
 ## 📌 DB Modeling
 
 **[🔗 dbdiagram](https://dbdiagram.io/d/6342861cf0018a1c5fc43173)**
-![DB Modeling](https://imgur.com/e96LpnO)
+![DB Modeling](https://i.imgur.com/e96LpnO.jpg)
 
 <br>
 
