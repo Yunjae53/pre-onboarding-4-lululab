@@ -2,7 +2,7 @@
 
 ## 📌 서비스 개요
 
-병원 예약 및 예약자 관리 
+병원 예약 및 예약자 관리
 
 <br/>
 
@@ -39,7 +39,7 @@
 ## 📌 DB Modeling
 
 **[🔗 dbdiagram](https://dbdiagram.io/d/6342861cf0018a1c5fc43173)**
-![DB Modeling](https://i.imgur.com/e96LpnO.jpg)
+![DB Modeling](https://i.imgur.com/IxeAHYO.jpg)
 
 <br>
 
