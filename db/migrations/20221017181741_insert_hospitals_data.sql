@@ -8,7 +8,11 @@ INSERT INTO `lululab`.`hospitals` (`hospital_type_id`, `name`, `number`, `addres
 INSERT INTO `lululab`.`hospitals` (`hospital_type_id`, `name`, `number`, `address`) VALUES ('7', '이솔치과의원', '0212341234', '서울특별시 송파구 올림픽로 307');
 INSERT INTO `lululab`.`hospitals` (`hospital_type_id`, `name`, `number`, `address`) VALUES ('8', '우리들한의원', '0212341234', '서울특별시 송파구 올림픽로 308');
 INSERT INTO `lululab`.`hospitals` (`hospital_type_id`, `name`, `number`, `address`) VALUES ('9', '호움조산원', '0212341234', '서울특별시 송파구 올림픽로 309');
-
+INSERT INTO `lululab`.`hospitals` (`hospital_type_id`, `name`, `number`, `address`) VALUES ('1', '미누병원', '0212341234', '경기도 남양주시 별내동');
+INSERT INTO `lululab`.`hospitals` (`hospital_type_id`, `name`, `number`, `address`) VALUES ('1', '래원병원', '0212341234', '경기도 남양주시 진접읍');
+INSERT INTO `lululab`.`hospitals` (`hospital_type_id`, `name`, `number`, `address`) VALUES ('1', '영지병원', '0212341234', '경기도 남양주시 오남읍');
+INSERT INTO `lululab`.`hospitals` (`hospital_type_id`, `name`, `number`, `address`) VALUES ('1', '라일병원', '0212341234', '경기도 남양주시 호평동');
+INSERT INTO `lululab`.`hospitals` (`hospital_type_id`, `name`, `number`, `address`) VALUES ('1', '금곡병원', '0212341234', '경기도 남양주시 금곡동');
 
 -- migrate:down
 SET FOREIGN_KEY_CHECKS = 0;

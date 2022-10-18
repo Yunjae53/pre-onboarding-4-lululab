@@ -15,8 +15,7 @@ CREATE TABLE reservations(
   CONSTRAINT PK_user_id_hospital_users_id FOREIGN KEY (user_id) REFERENCES users(id),
   CONSTRAINT PK_hospital_id_hospital_hospitals_id FOREIGN KEY (hospital_id) REFERENCES hospitals(id),
   CONSTRAINT PK_type_id_hospital_types_id FOREIGN KEY (type_id) REFERENCES types(id),
-  CONSTRAINT PK_time_id_hospital_times_id FOREIGN KEY (time_id) REFERENCES times(id),
-  UNIQUE KEY (status_id, user_id, hospital_id, type_id, time_id)
+  CONSTRAINT PK_time_id_hospital_times_id FOREIGN KEY (time_id) REFERENCES times(id)
 );
 
 
