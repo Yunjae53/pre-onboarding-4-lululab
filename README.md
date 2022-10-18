@@ -45,7 +45,7 @@
 
 ## 📌 API DOCS
 
-🔗 API DOCS
+**[🔗 API DOCS](https://documenter.getpostman.com/view/22729924/2s847HPspT)**
 
 <br/>
 
