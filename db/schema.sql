@@ -35,9 +35,9 @@ CREATE TABLE `hospitals` (
   `number` varchar(200) NOT NULL,
   `address` varchar(500) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `hospital_type_id` (`hospital_type_id`),
+  KEY `PK_hospital_type_id_hospital_types_id` (`hospital_type_id`),
   CONSTRAINT `PK_hospital_type_id_hospital_types_id` FOREIGN KEY (`hospital_type_id`) REFERENCES `hospital_types` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -59,7 +59,7 @@ CREATE TABLE `reservations` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `status_id` (`status_id`,`user_id`,`hospital_id`,`type_id`,`time_id`),
+  KEY `PK_status_id_hospital_statuses_id` (`status_id`),
   KEY `PK_user_id_hospital_users_id` (`user_id`),
   KEY `PK_hospital_id_hospital_hospitals_id` (`hospital_id`),
   KEY `PK_type_id_hospital_types_id` (`type_id`),
@@ -69,7 +69,7 @@ CREATE TABLE `reservations` (
   CONSTRAINT `PK_time_id_hospital_times_id` FOREIGN KEY (`time_id`) REFERENCES `times` (`id`),
   CONSTRAINT `PK_type_id_hospital_types_id` FOREIGN KEY (`type_id`) REFERENCES `types` (`id`),
   CONSTRAINT `PK_user_id_hospital_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
