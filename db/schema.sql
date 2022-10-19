@@ -41,6 +41,23 @@ CREATE TABLE `hospitals` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `patients`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `patients` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) NOT NULL,
+  `birth` date NOT NULL,
+  `block` date DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `reservations`
 --
 
@@ -49,27 +66,25 @@ CREATE TABLE `hospitals` (
 CREATE TABLE `reservations` (
   `id` int NOT NULL AUTO_INCREMENT,
   `status_id` int NOT NULL,
-  `user_id` int NOT NULL,
+  `patient_id` int NOT NULL,
   `hospital_id` int NOT NULL,
   `type_id` int NOT NULL,
   `time_id` int NOT NULL,
   `date` date NOT NULL,
-  `patient_name` varchar(200) NOT NULL,
-  `patient_birth` varchar(200) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `PK_status_id_hospital_statuses_id` (`status_id`),
-  KEY `PK_user_id_hospital_users_id` (`user_id`),
-  KEY `PK_hospital_id_hospital_hospitals_id` (`hospital_id`),
-  KEY `PK_type_id_hospital_types_id` (`type_id`),
-  KEY `PK_time_id_hospital_times_id` (`time_id`),
-  CONSTRAINT `PK_hospital_id_hospital_hospitals_id` FOREIGN KEY (`hospital_id`) REFERENCES `hospitals` (`id`),
-  CONSTRAINT `PK_status_id_hospital_statuses_id` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`),
-  CONSTRAINT `PK_time_id_hospital_times_id` FOREIGN KEY (`time_id`) REFERENCES `times` (`id`),
-  CONSTRAINT `PK_type_id_hospital_types_id` FOREIGN KEY (`type_id`) REFERENCES `types` (`id`),
-  CONSTRAINT `PK_user_id_hospital_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `PK_status_id_statuses_id` (`status_id`),
+  KEY `PK_patient_id_patients_id` (`patient_id`),
+  KEY `PK_hospital_id_hospitals_id` (`hospital_id`),
+  KEY `PK_type_id_types_id` (`type_id`),
+  KEY `PK_time_id_times_id` (`time_id`),
+  CONSTRAINT `PK_hospital_id_hospitals_id` FOREIGN KEY (`hospital_id`) REFERENCES `hospitals` (`id`),
+  CONSTRAINT `PK_patient_id_patients_id` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`),
+  CONSTRAINT `PK_status_id_statuses_id` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`),
+  CONSTRAINT `PK_time_id_times_id` FOREIGN KEY (`time_id`) REFERENCES `times` (`id`),
+  CONSTRAINT `PK_type_id_types_id` FOREIGN KEY (`type_id`) REFERENCES `types` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -121,24 +136,6 @@ CREATE TABLE `types` (
   `name` varchar(200) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `users`
---
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `users` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(200) NOT NULL,
-  `phone_number` varchar(200) NOT NULL,
-  `birth` date NOT NULL,
-  `block` date DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

@@ -4,7 +4,6 @@ const reservationService = require("../services/reservationService");
 const createReservation = async (req, res) => {
   const {
     statusId,
-    userId,
     hospitalId,
     typeId,
     timeId,
@@ -15,7 +14,6 @@ const createReservation = async (req, res) => {
   if (
     !(
       statusId &&
-      userId &&
       hospitalId &&
       typeId &&
       timeId &&
@@ -31,7 +29,6 @@ const createReservation = async (req, res) => {
 
   await reservationService.createReservation(
     statusId,
-    userId,
     hospitalId,
     typeId,
     timeId,
@@ -59,29 +56,10 @@ const getReservation = async (req, res) => {
 // 예약 변경
 const updateReservation = async (req, res) => {
   const reservationId = req.params.reservationId;
-  const {
-    statusId,
-    userId,
-    hospitalId,
-    typeId,
-    timeId,
-    date,
-    patientName,
-    patientBirth,
-  } = req.body;
+  const { statusId, patientName, patientBirth, typeId, timeId, date } =
+    req.body;
 
-  if (
-    !(
-      statusId &&
-      userId &&
-      hospitalId &&
-      typeId &&
-      timeId &&
-      date &&
-      patientName &&
-      patientBirth
-    )
-  ) {
+  if (!(statusId && patientName && patientBirth && typeId && timeId && date)) {
     const error = new Error("INPUT_ERROR");
     error.statusCode = 400;
     throw error;
@@ -90,13 +68,11 @@ const updateReservation = async (req, res) => {
   await reservationService.updateReservation(
     reservationId,
     statusId,
-    userId,
-    hospitalId,
+    patientName,
+    patientBirth,
     typeId,
     timeId,
-    date,
-    patientName,
-    patientBirth
+    date
   );
   return res.status(200).json({ message: "UPDATE_RESERVATION_SUCCESS" });
 };
