@@ -2,7 +2,6 @@ const reservationDao = require("../models/reservationDao");
 
 const createReservation = async (
   statusId,
-  userId,
   hospitalId,
   typeId,
   timeId,
@@ -10,16 +9,45 @@ const createReservation = async (
   patientName,
   patientBirth
 ) => {
-  return await reservationDao.createReservation(
-    statusId,
-    userId,
+  const getPatient = await reservationDao.getPatient(patientName, patientBirth);
+  let patientId = 0;
+
+  if (getPatient.length === 0) {
+    await reservationDao.createPatient(patientName, patientBirth);
+    const getId = await reservationDao.getPatient(patientName, patientBirth);
+    patientId = getId[0].id;
+  } else {
+    patientId = getPatient[0].id;
+
+    if (getPatient[0].block) {
+      const error = new Error("BLOCK_USER");
+      error.statusCode = 401;
+      throw error;
+    }
+  }
+
+  const reservationList = await reservationDao.reservationList(
     hospitalId,
-    typeId,
     timeId,
-    date,
-    patientName,
-    patientBirth
+    date
   );
+
+  if (reservationList.length === 0) {
+    return await reservationDao.createReservation(
+      statusId,
+      patientId,
+      hospitalId,
+      typeId,
+      timeId,
+      date,
+      patientName,
+      patientBirth
+    );
+  } else {
+    const error = new Error("ALREAD_RESERVAED_TIME");
+    error.statusCode = 401;
+    throw error;
+  }
 };
 
 const getReservation = async (reservationId, patientName) => {
@@ -29,24 +57,30 @@ const getReservation = async (reservationId, patientName) => {
 const updateReservation = async (
   reservationId,
   statusId,
-  userId,
-  hospitalId,
+  patientName,
+  patientBirth,
   typeId,
   timeId,
-  date,
-  patientName,
-  patientBirth
+  date
 ) => {
+  const getPatient = await reservationDao.getPatient(patientName, patientBirth);
+  let patientId = 0;
+
+  if (getPatient.length === 0) {
+    await reservationDao.createPatient(patientName, patientBirth);
+    const getId = await reservationDao.getPatient(patientName, patientBirth);
+    patientId = getId[0].id;
+  } else {
+    patientId = getPatient[0].id;
+  }
+
   return await reservationDao.updateReservation(
     reservationId,
     statusId,
-    userId,
-    hospitalId,
+    patientId,
     typeId,
     timeId,
-    date,
-    patientName,
-    patientBirth
+    date
   );
 };
 

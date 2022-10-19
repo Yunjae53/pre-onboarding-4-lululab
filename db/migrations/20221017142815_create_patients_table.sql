@@ -1,8 +1,7 @@
 -- migrate:up
-CREATE TABLE users(
+CREATE TABLE patients(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(200) NOT NULL,
-    phone_number VARCHAR(200) NOT NULL,
     birth DATE NOT NULL,
     block DATE NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -10,4 +9,4 @@ CREATE TABLE users(
 );
 
 -- migrate:down
-DROP TABLE users;
+DROP TABLE patients;

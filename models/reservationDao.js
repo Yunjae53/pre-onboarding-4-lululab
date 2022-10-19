@@ -1,8 +1,92 @@
 const { myDataSource } = require("../utils/dataSource");
 
+/**
+ * 환자 조회,
+ * input=patientName, patientBirth
+ * output=id, block
+ */
+const getPatient = async (patientName, patientBirth) => {
+  try {
+    const patient = await myDataSource.query(
+      `
+        SELECT
+          patients.id,
+          patients.block
+        FROM patients
+        WHERE name = ? AND birth =?
+      `,
+      [patientName, patientBirth]
+    );
+    return patient;
+  } catch (err) {
+    console.log(err);
+    const error = new Error("INVALID_DATA_INPUT");
+    error.statusCode = 500;
+    throw error;
+  }
+};
+
+/**
+ * 환자 등록,
+ * input=patientName, patientBirth
+ */
+const createPatient = async (patientName, patientBirth) => {
+  try {
+    const patient = await myDataSource.query(
+      `
+      INSERT INTO patients(name, birth)
+      VALUES (?, ?)
+      `,
+      [patientName, patientBirth]
+    );
+    return patient;
+  } catch (err) {
+    console.log(err);
+    const error = new Error("INVALID_DATA_INPUT");
+    error.statusCode = 500;
+    throw error;
+  }
+};
+
+/**
+ * 예약 여부 조회,
+ * input=hospitalId, timeId, date
+ * output=id, block
+ */
+const reservationList = async (hospitalId, timeId, date) => {
+  try {
+    const reservation = JSON.parse(
+      JSON.stringify(
+        await myDataSource.query(
+          `
+        SELECT
+          reservations.id,
+          reservations.status_id,
+          reservations.patient_id,
+          reservations.type_id
+        FROM reservations
+        WHERE hospital_id = ? AND time_id = ? AND date = ? AND status_id < 5
+      `,
+          [hospitalId, timeId, date]
+        )
+      )
+    );
+    return reservation;
+  } catch (err) {
+    console.log(err);
+    const error = new Error("INVALID_DATA_INPUT");
+    error.statusCode = 500;
+    throw error;
+  }
+};
+
+/**
+ * 예약,
+ * input=patientName, patientBirth
+ */
 const createReservation = async (
   statusId,
-  userId,
+  patientId,
   hospitalId,
   typeId,
   timeId,
@@ -13,12 +97,12 @@ const createReservation = async (
   try {
     const reservation = await myDataSource.query(
       `
-      INSERT INTO reservations(status_id, user_id, hospital_id, type_id, time_id, date, patient_name, patient_birth)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO reservations(status_id, patient_id, hospital_id, type_id, time_id, date)
+      VALUES (?, ?, ?, ?, ?, ?)
       `,
       [
         statusId,
-        userId,
+        patientId,
         hospitalId,
         typeId,
         timeId,
@@ -36,23 +120,29 @@ const createReservation = async (
   }
 };
 
+/**
+ * 예약 조회,
+ * input=reservationId, patientName
+ * output=reservationId, statusId, patientId, patientName, patientBirth, hospitalId, typeId, timeId, date
+ */
 const getReservation = async (reservationId, patientName) => {
   try {
     const reservation = await myDataSource.query(
       `
         SELECT
-          reservations.id AS 'reservationsId',
+          reservations.id AS 'reservationId',
           reservations.status_id AS 'statusId',
-          reservations.user_id AS 'userId',
+          reservations.patient_id AS 'patientId',
+          patients.name AS 'patientName',
+          DATE_FORMAT(patients.birth, '%Y-%m-%d') AS 'patientBirth',
           reservations.hospital_id AS 'hospitalId',
           reservations.type_id AS 'typeId',
           reservations.time_id AS 'timeId',
-          reservations.date,
-          reservations.patient_name AS 'patientName',
-          reservations.patient_birth AS 'patientBirth'
+          DATE_FORMAT(reservations.date, '%Y-%m-%d') AS 'date'
         FROM reservations
-        WHERE id = ?
-          OR patient_name = ?
+        JOIN patients ON patients.id = patient_id
+        WHERE reservations.id = ?
+          OR patients.name = ?
       `,
       [reservationId, patientName]
     );
@@ -65,16 +155,17 @@ const getReservation = async (reservationId, patientName) => {
   }
 };
 
+/**
+ * 예약 변경,
+ * input=reservationId, statusId, patientId, typeId, timeId, date
+ */
 const updateReservation = async (
   reservationId,
   statusId,
-  userId,
-  hospitalId,
+  patientId,
   typeId,
   timeId,
-  date,
-  patientName,
-  patientBirth
+  date
 ) => {
   try {
     const reservation = await myDataSource.query(
@@ -82,26 +173,13 @@ const updateReservation = async (
       UPDATE reservations
       SET
         status_id = ?,
-        user_id = ?,
-        hospital_id = ?,
+        patient_id = ?,
         type_id = ?,
         time_id = ?,
-        date = ?,
-        patient_name = ?,
-        patient_birth = ?
+        date = ?
       WHERE id = ?
       `,
-      [
-        statusId,
-        userId,
-        hospitalId,
-        typeId,
-        timeId,
-        date,
-        patientName,
-        patientBirth,
-        reservationId,
-      ]
+      [statusId, patientId, typeId, timeId, date, reservationId]
     );
     return reservation;
   } catch (err) {
@@ -113,6 +191,9 @@ const updateReservation = async (
 };
 
 module.exports = {
+  getPatient,
+  createPatient,
+  reservationList,
   createReservation,
   getReservation,
   updateReservation,
