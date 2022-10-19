@@ -1,6 +1,6 @@
 const express = require("express");
 const hospitalRouter = require("./hospitalRouter");
-// const reservationRouter = require("./recordRouter");
+const reservationRouter = require("./reservationRouter");
 const router = express.Router();
 
 router.get("/ping", (req, res) => {
@@ -8,6 +8,6 @@ router.get("/ping", (req, res) => {
 });
 
 router.use("/hospitals", hospitalRouter);
-// router.use("/reservations", reservationRouter);
+router.use("/reservations", reservationRouter);
 
 module.exports = router;

@@ -3,7 +3,6 @@ const hospitalService = require("../services/hospitalService");
 // 예약 가능한 병원 조회
 const getHospitals = async (req, res) => {
   const { hospitalTypeId, address, time, date } = req.body;
-  console.log("teaetea1");
   if (!(hospitalTypeId && address && time && date)) {
     const error = new Error("INPUT_ERROR");
     error.statusCode = 400;
@@ -33,9 +32,6 @@ const getAvailable = async (req, res) => {
   }
 
   const availableTime = await hospitalService.getAvailable(hospitalId, date);
-
-  // const test = JSON.parse(availableTime).time;
-  // console.log("test=", test);
 
   return res
     .status(200)
