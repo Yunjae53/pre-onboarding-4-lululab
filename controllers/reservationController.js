@@ -10,6 +10,7 @@ const createReservation = async (req, res) => {
     date,
     patientName,
     patientBirth,
+    email,
   } = req.body;
   if (
     !(
@@ -19,7 +20,8 @@ const createReservation = async (req, res) => {
       timeId &&
       date &&
       patientName &&
-      patientBirth
+      patientBirth &&
+      email
     )
   ) {
     const error = new Error("INPUT_ERROR");
@@ -34,7 +36,8 @@ const createReservation = async (req, res) => {
     timeId,
     date,
     patientName,
-    patientBirth
+    patientBirth,
+    email
   );
   return res.status(200).json({ message: "CREATE_RESERVATION_SUCCESS" });
 };
